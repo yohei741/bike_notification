@@ -22,15 +22,30 @@ elem_pw.send_keys("850917")
 elem_login_btn = browser.find_element_by_id("m01a_login")
 elem_login_btn.click()
 
-# 技能予約ページへ遷移
+# 技能予約ページへ遷移（１週目）
 elem_serve_page = browser.find_element_by_link_text("技能予約")
 elem_serve_page.click()
 
-# ページソースデータを格納
+# １週目のページ情報を取得
 elems_text = browser.page_source
 
+# 2週目ページへ遷移
+elem_next_page = browser.find_element_by_link_text("次週")
+elem_next_page.click()
 
-# LINE通知を行う
+# 2週目のページ情報を取得
+elems_text += browser.page_source
+
+# 最終予約時点のindexを取得
+# 予約がない場合は、「-1」を返す（find関数のルール）
+idx_last = max(elems_text.rfind("JX") , elems_text.rfind("XJ"))
+
+# 最終予約以降の情報に絞り込み
+if idx_last!=-1:
+    elems_text = elems_text[idx_last]
+
+
+# LINE通知を行うスニペット
 LINE_TOKEN="007GbOWcPz5PiY9Ukq1MfU8Ja7XzipTwzTtBbq1z4rF"
 LINE_NOTIFY_URL="https://notify-api.line.me/api/notify"
 
