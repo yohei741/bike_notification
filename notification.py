@@ -42,7 +42,7 @@ idx_last = max(elems_text.rfind("JX") , elems_text.rfind("XJ"))
 
 # 最終予約以降の情報に絞り込み
 if idx_last!=-1:
-    elems_text = elems_text[idx_last]
+    elems_text = elems_text[idx_last:]
 
 
 # LINE通知を行うスニペット
