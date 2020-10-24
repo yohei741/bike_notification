@@ -5,6 +5,13 @@ import urllib.request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import chromedriver_binary
+import os
+
+# # ローカルで動かすときのみ、アクティブにする
+# import settings
+# ID = settings.ID
+# PASS = settings.PASS
+# LINE_TOKEN = settings.LINE_TOKEN
 
 # ログイン画面を立ち上げ
 options = Options()
@@ -14,9 +21,9 @@ browser.get("https://www.e-license.jp/el25/?abc=LAtcyKgwukI%2BbrGQYS%2B1OA%3D%3D
 
 # ログイン情報を入力
 elem_username = browser.find_element_by_id("m01a_b_studentId")
-elem_username.send_keys("5647")
+elem_username.send_keys(os.environ.get("ID",ID))
 elem_pw = browser.find_element_by_name("b.password")
-elem_pw.send_keys("850917")
+elem_pw.send_keys(os.environ.get("PASS",PASS))
 
 # ログインボタンを押下
 elem_login_btn = browser.find_element_by_id("m01a_login")
@@ -46,7 +53,7 @@ if idx_last!=-1:
 
 
 # LINE通知を行うスニペット
-LINE_TOKEN="007GbOWcPz5PiY9Ukq1MfU8Ja7XzipTwzTtBbq1z4rF"
+LINE_TOKEN=os.environ.get("LINE_TOKEN",LINE_TOKEN)
 LINE_NOTIFY_URL="https://notify-api.line.me/api/notify"
 
 def send_line_push():
