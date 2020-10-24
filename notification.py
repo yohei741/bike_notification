@@ -6,12 +6,17 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import chromedriver_binary
 import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
-# # ローカルで動かすときのみ、アクティブにする
-# import settings
-# ID = settings.ID
-# PASS = settings.PASS
-# LINE_TOKEN = settings.LINE_TOKEN
+# 環境変数を取得する
+# 「settings.py」の相対パスを取得し、joinで「.env」ファイルを指定します。
+# dotenv_pathに格納された.envファイルのパスを元に、load_dotenvでファイルの中身を読み取ります
+# https://qiita.com/harukikaneko/items/b004048f8d1eca44cba9
+# https://lotus-base.com/blog/19
+load_dotenv(verbose=True)
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 # ログイン画面を立ち上げ
 options = Options()
@@ -21,9 +26,9 @@ browser.get("https://www.e-license.jp/el25/?abc=LAtcyKgwukI%2BbrGQYS%2B1OA%3D%3D
 
 # ログイン情報を入力
 elem_username = browser.find_element_by_id("m01a_b_studentId")
-elem_username.send_keys(os.environ.get("ID",ID))
+elem_username.send_keys(os.environ.get("ID"))
 elem_pw = browser.find_element_by_name("b.password")
-elem_pw.send_keys(os.environ.get("PASS",PASS))
+elem_pw.send_keys(os.environ.get("PASS"))
 
 # ログインボタンを押下
 elem_login_btn = browser.find_element_by_id("m01a_login")
@@ -53,7 +58,7 @@ if idx_last!=-1:
 
 
 # LINE通知を行うスニペット
-LINE_TOKEN=os.environ.get("LINE_TOKEN",LINE_TOKEN)
+LINE_TOKEN=os.environ.get("LINE_TOKEN")
 LINE_NOTIFY_URL="https://notify-api.line.me/api/notify"
 
 def send_line_push():
