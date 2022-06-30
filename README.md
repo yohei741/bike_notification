@@ -7,3 +7,5 @@
 - 10分おきにクローリングしてくれる
 - Herokuを使用（PaaS）
 
+# 参考
+[【note】Pythonで「ふもとっぱら」キャンプ場へ行き放題Botをつくってみた](https://note.com/youhei0917/n/n1d7c88b1411f)
